@@ -1,6 +1,7 @@
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 
+
 START_YEAR = 1920
 ROSAS_FILE = 'vino.txt'
 
@@ -18,10 +19,39 @@ rendered_page = template.render(
 # with open('index.html', 'w', encoding="utf8") as file:
 #     file.write(rendered_page)
 
-with open(ROSAS_FILE, "r") as my_file:
-    file_contents = [wine.split(':') for wine in my_file.read().split(
-        '\n') if wine != '']
 
-    for attr, value in file_contents:
-        if attr == 'Сорт':
-            print(value)
+def file_reader(filename):
+    with open(filename, "r", encoding='utf-8-sig') as my_file:
+        return my_file.read()
+
+
+def dict_converter(data_text):
+    output_data = {}
+    for row in data_text.split('# '):
+        category = row.split('\n')[0]
+        assets_in_categ = []
+        for element in [
+            details.strip().split('\n') for details in row.split(
+                '\n\n')[1:] if len(details) > 1]:
+            name, gr_type, price, img = [
+                a.split(': ')[1] for a in element if len(a) > 1]
+            assets_in_categ.append(
+                {'name': name,
+                 'gr_type': gr_type,
+                 'price': price,
+                 'img': img})
+
+        output_data.update({category: assets_in_categ})
+    return output_data
+
+
+data_text = file_reader('products.txt')
+converted_data = dict_converter(data_text)
+
+print(converted_data)
+
+        
+
+
+
+
