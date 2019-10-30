@@ -128,7 +128,10 @@
               <div>
                 <h3 class="heading mt-3 mb-3 text-dark">{{item['name']}}</font></h3>
                 <p>
-                  Сорт винограда - {{item['gr_type']}}<br/>
+                  {% if item['gr_type'] %}
+                    Сорт винограда - {{item['gr_type']}}<br/>
+                  {% else %}
+                  {% endif %}
                   <span class="price">{{item['price']}} p.</span>
                 </p>
               </div>
