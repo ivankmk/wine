@@ -107,6 +107,7 @@
     <div class="site-section">
       <div class="container">
         <div class="row">
+
           <div class="col-12 section-title text-center mb-5">
             <h2 class="d-block">Коллекция вин</h2>
             <p>Вино — один из самых благородных и многогранных напитков в мире! Виноделие берёт своё начало с незапамятных времён. Вино упоминается в Библии и Коране, греческой и римской мифологии, где были свои боги вина (к примеру, Дионис). Стоит отметить, что почти у каждого народа существует своя легенда, повествующая о появлении божественного эликсира — вина.
@@ -114,22 +115,32 @@
           </div>
         </div>
         <div class="row">
-          {% for i in range(6) %}
+        {% for section, items in converted_data.items() %}
+        <!-- Categoty -->
+        <div class="col-12 section-title text-center mb-5">
+            <h2 class="d-block">{{section}}</h2>
+            </p>
+        </div>     
+          {% for item in items %}
           <div class="col-lg-4 mb-5 col-md-6">
             <div class="wine_v_1 text-center pb-4 pt-5">
-              <img src="images/izabella.png" alt="Image" class="img-fluid">
+              <img src="{{item['img']}}" alt="Image" class="img-fluid">
               <div>
-                <h3 class="heading mt-3 mb-3 text-dark">Изабелла</font></h3>
+                <h3 class="heading mt-3 mb-3 text-dark">{{item['name']}}</font></h3>
                 <p>
-                  Сорт винограда - Изабелла<br/>
-                  <span class="price">350 р.</span>
+                  Сорт винограда - {{item['gr_type']}}<br/>
+                  <span class="price">{{item['price']}} p.</span>
                 </p>
               </div>
             </div>
           </div>
           {% endfor %}
-
+        <!-- End of category -->
+        {% endfor %}
         </div>
+      </div>
+    </div>
+
       </div>
     </div>
 

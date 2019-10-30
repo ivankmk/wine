@@ -5,20 +5,6 @@ import datetime
 START_YEAR = 1920
 ROSAS_FILE = 'vino.txt'
 
-env = Environment(
-    loader=FileSystemLoader('.'),
-    autoescape=select_autoescape(['html', 'xml'])
-)
-
-template = env.get_template('template.html')
-
-rendered_page = template.render(
-    how_old=datetime.datetime.now().year - START_YEAR
-)
-
-# with open('index.html', 'w', encoding="utf8") as file:
-#     file.write(rendered_page)
-
 
 def file_reader(filename):
     with open(filename, "r", encoding='utf-8-sig') as my_file:
@@ -45,13 +31,22 @@ def dict_converter(data_text):
     return output_data
 
 
+env = Environment(
+    loader=FileSystemLoader('.'),
+    autoescape=select_autoescape(['html', 'xml'])
+)
+
+template = env.get_template('template.html')
+
 data_text = file_reader('products.txt')
 converted_data = dict_converter(data_text)
 
-print(converted_data)
-
-        
-
-
+rendered_page = template.render(
+    how_old=datetime.datetime.now().year - START_YEAR,
+    converted_data=converted_data
 
 
+)
+
+with open('index.html', 'w', encoding="utf8") as file:
+    file.write(rendered_page)
