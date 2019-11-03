@@ -3,7 +3,8 @@ import datetime
 
 
 START_YEAR = 1920
-ROSAS_FILE = 'vino.txt'
+# ROSAS_FILE = 'vino.txt'
+ACTIONS = 'action.txt'
 
 
 def file_reader(filename):
@@ -16,18 +17,28 @@ def dict_converter(data_text):
     for row in data_text.split('# '):
         category = row.split('\n')[0]
         assets_in_categ = []
-        for element in [
-            details.strip().split('\n') for details in row.split(
-                '\n\n')[1:] if len(details) > 1]:
-            name, gr_type, price, img = [
-                a.split(': ')[1] for a in element if len(a) > 1]
-            assets_in_categ.append(
-                {'name': name,
-                 'gr_type': gr_type,
-                 'price': price,
-                 'img': img})
-
-        output_data.update({category: assets_in_categ})
+        for asset_element in [
+            asset.strip().split('\n') for asset
+                in row.split('\n\n')[1:] if len(asset) > 1]:
+            asset_element = [
+                element.split(':')[-1].strip() for element in asset_element]
+            if 'Выгодное предложение' in asset_element:
+                name, gr_type, price, img, spec_offer = asset_element
+                assets_in_categ.append(
+                    {'name': name,
+                     'gr_type': gr_type,
+                     'price': price,
+                     'img': img,
+                     'spec_offer': True})
+            else:
+                name, gr_type, price, img = asset_element
+                assets_in_categ.append(
+                    {'name': name,
+                     'gr_type': gr_type,
+                     'price': price,
+                     'img': img,
+                     'spec_offer': None})
+            output_data.update({category: assets_in_categ})
     return output_data
 
 
@@ -38,15 +49,14 @@ env = Environment(
 
 template = env.get_template('template.html')
 
-data_text = file_reader('products.txt')
+data_text = file_reader(ACTIONS)
 converted_data = dict_converter(data_text)
+
 
 rendered_page = template.render(
     how_old=datetime.datetime.now().year - START_YEAR,
     converted_data=converted_data
-
-
-)
+    )
 
 with open('index.html', 'w', encoding="utf8") as file:
     file.write(rendered_page)
