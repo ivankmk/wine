@@ -3,7 +3,6 @@ import datetime
 
 
 START_YEAR = 1920
-# ROSAS_FILE = 'vino.txt'
 ACTIONS = 'action.txt'
 
 
@@ -41,22 +40,22 @@ def dict_converter(data_text):
             output_data.update({category: assets_in_categ})
     return output_data
 
+if __name__ == "__main__":
 
-env = Environment(
-    loader=FileSystemLoader('.'),
-    autoescape=select_autoescape(['html', 'xml'])
-)
-
-template = env.get_template('template.html')
-
-data_text = file_reader(ACTIONS)
-converted_data = dict_converter(data_text)
-
-
-rendered_page = template.render(
-    how_old=datetime.datetime.now().year - START_YEAR,
-    converted_data=converted_data
+    env = Environment(
+        loader=FileSystemLoader('.'),
+        autoescape=select_autoescape(['html', 'xml'])
     )
 
-with open('index.html', 'w', encoding="utf8") as file:
-    file.write(rendered_page)
+    template = env.get_template('template.html')
+
+    data_text = file_reader(ACTIONS)
+    converted_data = dict_converter(data_text)
+
+    rendered_page = template.render(
+        how_old=datetime.datetime.now().year - START_YEAR,
+        converted_data=converted_data
+        )
+
+    with open('index.html', 'w', encoding="utf8") as file:
+        file.write(rendered_page)
