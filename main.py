@@ -6,12 +6,12 @@ START_YEAR = 1920
 ACTIONS = 'inventory_list.txt'
 
 
-def file_reader(filename):
+def read_file(filename):
     with open(filename, "r", encoding='utf-8-sig') as my_file:
         return my_file.read()
 
 
-def dict_converter(data_text):
+def convert_to_dict(data_text):
     output_data = {}
     for row in data_text.split('# '):
         category = row.split('\n')[0]
@@ -49,8 +49,8 @@ if __name__ == "__main__":
 
     template = env.get_template('template.html')
 
-    data_text = file_reader(ACTIONS)
-    converted_data = dict_converter(data_text)
+    data_text = read_file(ACTIONS)
+    converted_data = convert_to_dict(data_text)
 
     rendered_page = template.render(
         how_old=datetime.datetime.now().year - START_YEAR,
