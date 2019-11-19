@@ -3,7 +3,7 @@ import datetime
 
 
 START_YEAR = 1920
-ACTIONS = 'action.txt'
+ACTIONS = 'inventory_list.txt'
 
 
 def file_reader(filename):
