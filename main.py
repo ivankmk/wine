@@ -15,30 +15,31 @@ def convert_to_dict(data_text):
     output_data = {}
     for row in data_text.split('# '):
         category = row.split('\n')[0]
-        assets_in_categ = []
-        for asset_element in [
-            asset.strip().split('\n') for asset
-                in row.split('\n\n')[1:] if len(asset) > 1]:
+        assets_in_category = []
+        assets = [asset.strip().split('\n') for asset in row.split(
+            '\n\n')[1:] if len(asset) > 1]
+        for asset_element in assets:
             asset_element = [
                 element.split(':')[-1].strip() for element in asset_element]
             if 'Выгодное предложение' in asset_element:
-                name, gr_type, price, img, spec_offer = asset_element
-                assets_in_categ.append(
+                name, grape_type, price, img, special_offer = asset_element
+                assets_in_category.append(
                     {'name': name,
-                     'gr_type': gr_type,
+                     'grape_type': grape_type,
                      'price': price,
                      'img': img,
-                     'spec_offer': True})
+                     'special_offer': True})
             else:
-                name, gr_type, price, img = asset_element
-                assets_in_categ.append(
+                name, grape_type, price, img = asset_element
+                assets_in_category.append(
                     {'name': name,
-                     'gr_type': gr_type,
+                     'grape_type': grape_type,
                      'price': price,
                      'img': img,
-                     'spec_offer': None})
-            output_data.update({category: assets_in_categ})
+                     'special_offer': None})
+            output_data.update({category: assets_in_category})
     return output_data
+
 
 if __name__ == "__main__":
 
