@@ -38,7 +38,8 @@ def convert_to_dict(data_text):
                      'price': price,
                      'img': img,
                      'special_offer': None})
-            output_data.update({category: assets_in_category})
+            output_data[category] = assets_in_category
+
     return output_data
 
 
