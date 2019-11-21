@@ -19,10 +19,11 @@ def convert_to_dict(data_text):
         assets = [asset.strip().split('\n') for asset in row.split(
             '\n\n')[1:] if len(asset) > 1]
         for asset_element in assets:
-            asset_element = [
+            asset_element_cleaned = [
                 element.split(':')[-1].strip() for element in asset_element]
-            if 'Выгодное предложение' in asset_element:
-                name, grape_type, price, img, special_offer = asset_element
+            if 'Выгодное предложение' in asset_element_cleaned:
+                name, grape_type, price, \
+                    img, special_offer = asset_element_cleaned
                 assets_in_category.append(
                     {'name': name,
                      'grape_type': grape_type,
@@ -30,7 +31,7 @@ def convert_to_dict(data_text):
                      'img': img,
                      'special_offer': True})
             else:
-                name, grape_type, price, img = asset_element
+                name, grape_type, price, img = asset_element_cleaned
                 assets_in_category.append(
                     {'name': name,
                      'grape_type': grape_type,
