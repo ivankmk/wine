@@ -31,7 +31,6 @@ def convert_to_dict(data_text):
                      'img': element_cleaned['Картинка'],
                      'special_offer': True})
             else:
-                name, grape_type, price, img = element_cleaned
                 assets_in_category.append(
                     {'name': element_cleaned['Название'],
                      'grape_type': element_cleaned['Сорт'],
