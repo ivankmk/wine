@@ -23,20 +23,15 @@ def convert_to_dict(data_text):
                 element.split(':')[0].strip():
                     element.split(':')[-1].strip() for element in asset_element
                 }
-            if 'Выгодное предложение' in element_cleaned:
-                assets_in_category.append(
-                    {'name': element_cleaned['Название'],
-                     'grape_type': element_cleaned['Сорт'],
-                     'price': element_cleaned['Цена'],
-                     'img': element_cleaned['Картинка'],
-                     'special_offer': True})
-            else:
-                assets_in_category.append(
-                    {'name': element_cleaned['Название'],
-                     'grape_type': element_cleaned['Сорт'],
-                     'price': element_cleaned['Цена'],
-                     'img': element_cleaned['Картинка'],
-                     'special_offer': None})
+
+            assets_in_category.append(
+                {'name': element_cleaned['Название'],
+                 'grape_type': element_cleaned['Сорт'],
+                 'price': element_cleaned['Цена'],
+                 'img': element_cleaned['Картинка'],
+                 'special_offer': True if
+                    'Выгодное предложение' in element_cleaned else None})
+
             output_data[category] = assets_in_category
 
     return output_data
