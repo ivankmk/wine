@@ -23,7 +23,6 @@ def convert_to_dict(data_text):
                 element.split(':')[0].strip():
                     element.split(':')[-1].strip() for element in asset_element
                 }
-            print(element_cleaned)
             if 'Выгодное предложение' in element_cleaned:
                 assets_in_category.append(
                     {'name': element_cleaned['Название'],
