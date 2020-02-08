@@ -1,9 +1,9 @@
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
+import sys
 
 
 START_YEAR = 1920
-ACTIONS = 'inventory_list.txt'
 
 
 def read_file(filename):
@@ -46,6 +46,8 @@ def convert_to_dict(data_text):
 
 if __name__ == "__main__":
 
+    data_file = sys.argv[1]
+
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
@@ -53,7 +55,7 @@ if __name__ == "__main__":
 
     template = env.get_template('template.html')
 
-    data_text = read_file(ACTIONS)
+    data_text = read_file(data_file)
     converted_data = convert_to_dict(data_text)
 
     rendered_page = template.render(
