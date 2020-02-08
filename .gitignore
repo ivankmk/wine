@@ -1,4 +1,5 @@
 env/
 .vscode/
-*.txt
+inventory_list.txt
+products.txt
 
