@@ -19,25 +19,25 @@ def convert_to_dict(data_text):
         assets = [asset.strip().split('\n') for asset in row.split(
             '\n\n')[1:] if len(asset) > 1]
         for asset_element in assets:
-            asset_element_cleaned = {
+            element_cleaned = {
                 element.split(':')[0].strip():
                     element.split(':')[-1].strip() for element in asset_element
                 }
-            print(asset_element_cleaned)
-            if 'Выгодное предложение' in asset_element_cleaned:
+            print(element_cleaned)
+            if 'Выгодное предложение' in element_cleaned:
                 assets_in_category.append(
-                    {'name': asset_element_cleaned['Название'],
-                     'grape_type': asset_element_cleaned['Сорт'],
-                     'price': asset_element_cleaned['Цена'],
-                     'img': asset_element_cleaned['Картинка'],
+                    {'name': element_cleaned['Название'],
+                     'grape_type': element_cleaned['Сорт'],
+                     'price': element_cleaned['Цена'],
+                     'img': element_cleaned['Картинка'],
                      'special_offer': True})
             else:
-                name, grape_type, price, img = asset_element_cleaned
+                name, grape_type, price, img = element_cleaned
                 assets_in_category.append(
-                    {'name': asset_element_cleaned['Название'],
-                     'grape_type': asset_element_cleaned['Сорт'],
-                     'price': asset_element_cleaned['Цена'],
-                     'img': asset_element_cleaned['Картинка'],
+                    {'name': element_cleaned['Название'],
+                     'grape_type': element_cleaned['Сорт'],
+                     'price': element_cleaned['Цена'],
+                     'img': element_cleaned['Картинка'],
                      'special_offer': None})
             output_data[category] = assets_in_category
 
@@ -55,8 +55,8 @@ if __name__ == "__main__":
 
     template = env.get_template('template.html')
 
-    data_text = read_file(data_file)
-    converted_data = convert_to_dict(data_text)
+    read_data = read_file(data_file)
+    converted_data = convert_to_dict(read_data)
 
     rendered_page = template.render(
         how_old=datetime.datetime.now().year - START_YEAR,
