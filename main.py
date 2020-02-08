@@ -46,7 +46,7 @@ def convert_to_dict(data_text):
 
 if __name__ == "__main__":
 
-    data_file = sys.argv[1]
+    input_file = sys.argv[1]
 
     env = Environment(
         loader=FileSystemLoader('.'),
@@ -55,12 +55,12 @@ if __name__ == "__main__":
 
     template = env.get_template('template.html')
 
-    read_data = read_file(data_file)
-    converted_data = convert_to_dict(read_data)
+    inventory_raw = read_file(input_file)
+    inventory_prepared = convert_to_dict(inventory_raw)
 
     rendered_page = template.render(
         how_old=datetime.datetime.now().year - START_YEAR,
-        converted_data=converted_data
+        inventory_prepared=inventory_prepared
         )
 
     with open('index.html', 'w', encoding="utf8") as file:
