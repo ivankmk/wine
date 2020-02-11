@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 import sys
@@ -29,8 +30,7 @@ def convert_to_dict(data_text):
                  'grape_type': element_cleaned['Сорт'],
                  'price': element_cleaned['Цена'],
                  'img': element_cleaned['Картинка'],
-                 'special_offer': True if
-                    'Выгодное предложение' in element_cleaned else None})
+                 'special_offer': 'Выгодное предложение' in element_cleaned})
 
             output_data[category] = assets_in_category
 
@@ -48,12 +48,12 @@ if __name__ == "__main__":
 
     template = env.get_template('template.html')
 
-    inventory_raw = read_file(input_file)
-    inventory_prepared = convert_to_dict(inventory_raw)
+    raw_inventory = read_file(input_file)
+    prepared_inventory = convert_to_dict(raw_inventory)
 
     rendered_page = template.render(
         how_old=datetime.datetime.now().year - START_YEAR,
-        inventory_prepared=inventory_prepared
+        prepared_inventory=prepared_inventory
         )
 
     with open('index.html', 'w', encoding="utf8") as file:
