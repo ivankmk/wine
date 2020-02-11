@@ -2,4 +2,5 @@ env/
 .vscode/
 inventory_list.txt
 products.txt
+index.html
 
